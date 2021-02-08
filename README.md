@@ -12,4 +12,4 @@ php mini FileManager 8kb
 * ...
 
 ##screen
-![FileManager](screen.png)
+![FileManager](screen.PNG)
