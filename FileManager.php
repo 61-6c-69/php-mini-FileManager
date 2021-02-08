@@ -178,7 +178,7 @@
             $icon = '📁';
             $t = fileTime($p);
             $l = makeLink("?path=$p",$d);
-			$perms = fileperms($p);
+			$perms = substr(sprintf("%o", fileperms($p)),-4);
 			$owner = fileowner($p);
 			$controller = 
 				(is_file($p) ? makeLink("?edit=$p","Edit","_blank") : '').
