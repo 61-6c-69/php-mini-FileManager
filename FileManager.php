@@ -6,7 +6,7 @@
 //
 	error_reporting(0);
 	session_start();
-    define('password', 'admin');
+	define('password', 'admin');
 	$head = '<head><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Mini-FileManager</title><style>pre{border:1px solid #ddd;padding:5px;overflow:auto}table{border-collapse:collapse;width:100%;overflow:auto}th,td{padding:0.25rem;text-align:left;border-bottom:1px solid #ccc}tbody tr:nth-child(odd){background:#eee}tr:hover{background-color:#f5f5f5}</style></head>';
 //
 //
