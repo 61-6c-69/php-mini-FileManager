@@ -250,12 +250,13 @@ if(php_sapi_name() != "cli"){
 			//
 			break;
 		case "-S":
+			//
 			break;
 		case "-C":
+			//
 			break;
 		default:
-			echo "\n-F Create New File\n-O Open File\n-S Save File\n-C Close File\n ";
+			echo "\n-F Create New File\n-O Open File\n-S Save File\n-C Close File";
 			break;
 	}
 }
-
