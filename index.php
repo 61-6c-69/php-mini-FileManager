@@ -239,24 +239,16 @@
 //run FileManager.php
 //
 //
-if(php_sapi_name() != "cli"){
-	Web();
-}else{
-	switch($argv[1]){
-		case "-F":
-				isset($argv[2]) ? new_file(dirname($argv[2]), basename($argv[2])) : die("Invalid Filename");
-			break;
-		case "-O":
-			//
-			break;
-		case "-S":
-			//
-			break;
-		case "-C":
-			//
-			break;
-		default:
-			echo "\n-F Create New File\n-O Open File\n-S Save File\n-C Close File";
-			break;
-	}
-}
+Web();
+
+
+
+
+
+
+
+
+
+
+
+
