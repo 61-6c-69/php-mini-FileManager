@@ -11,13 +11,12 @@ php mini FileManager 8kb
 * windows drives
 * ...
 
-## screen
-![FileManager](screen.PNG)
-
-
 ## Install in heroku
 1. fork in github
 2. heroku > New > Create new app
 3. Deploy > Deployment method > github
 4. Connect
 5. Deploy Branch
+
+## screen
+![FileManager](screen.PNG)
