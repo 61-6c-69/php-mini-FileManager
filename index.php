@@ -34,7 +34,7 @@
     function makeForm($method, $inputArray,$file = ""){
         $form = "<form method=$method enctype='$file'>"; 
         foreach($inputArray as $key=>$val){
-            $form .= makeInput($key,(is_array($val) ? $val[0] : $val), (is_array($val) ? $val[1] : ""), (is_array($val) ? $val[2] : ""));
+            $form .= makeInput($key,(is_array($val) ? $val[0] : $val), (isset($val[1]) ? $val[1] : ""), (isset($val[2]) ? $val[2] : ""));
         }
         return $form."</form>";
     }
@@ -175,18 +175,18 @@
 			}
             $p = $path.'/'.$d;
             $s = '--';
-            $icon = 'ًں“پ';
+            $icon = "&#128193;";
             $t = fileTime($p);
             $l = makeLink("?path=$p",$d);
 			$perms = substr(sprintf("%o", fileperms($p)),-4);
-			$owner = fileowner($p);
+			$owner =  (function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($p))['name'] : fileowner($p));
 			$controller = 
 				(is_file($p) ? makeLink("?edit=$p","Edit","_blank") : '').
 				makeLink("?delete=$p","Delete","_blank").
 				(is_file($p) ? makeLink("?download=$p","Download","_blank") : '');
             if(is_file($p)){
                 $s = filesize_convert(filesize($p));
-                $icon = 'ًں“„';
+                $icon = "&#128221;";
             }
             $files[] = [$icon,$i,$l,$s,$t,$perms,$owner,$controller];
             $i++;
