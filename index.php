@@ -179,7 +179,7 @@
             $t = fileTime($p);
             $l = makeLink("?path=$p",$d);
 			$perms = substr(sprintf("%o", fileperms($p)),-4);
-			$owner = posix_getpwuid(fileowner($p))
+			$owner = fileowner($p);
 			$controller = 
 				(is_file($p) ? makeLink("?edit=$p","Edit","_blank") : '').
 				makeLink("?delete=$p","Delete","_blank").
@@ -194,52 +194,44 @@
         return makeTable(['#','id','Filename','Size','Modified','Perms','Owner',''],$files);
     }
 
-	function Web(){
-			$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>'pass','submit'=>['login','Login']]);
-			if(!login()){
+	
+	$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>'pass','submit'=>['login','Login']]);
+	if(!login()){
 				die($loginTemplate);
-			}
-			if(get_get("delete")){
-				delete_file(get_get("delete")) ? die("Deleted: ".get_get("delete")) : die("File not found");
-			}
-			if(get_get("edit")){
-				if(get_post('save')){
-					save_edit(get_get('edit'),get_post('edit'));
-					echo "Saved";
-				}
-				$edit = edit_file(get_get("edit"));
-				$edit ? die($edit) : die("File not found");
-			}
-			if(get_get('download')){
-				@readfile(download_file(get_get('download')));
-				exit();
-			}
-			if(get_post('newfile')){
-				new_file(get_path(),get_post('filename')) ? die('Create: '.get_post('filename')) : die('File exites');
-			}
-			if(get_post('newdir')){
-				new_dir(get_path(),get_post('dirname')) ? die('Create: '.get_post('dirname')) : die('Dir exites');
-			}
-			if(get_post('upload')){
-				upload_file(get_path(),$_FILES['file']) ? die('upload: '. $_FILES['file']['name']) : die('Upload Error');
-			}
-			echo $head.
-				"<body>".
-				makeForm('POST',['text'=>['filename','File Name'],'submit'=>['newfile','Create']]).
-				makeForm('POST',['text'=>['dirname','Dir Name'],'submit'=>['newdir','Create']]).
-				makeForm('POST',['file'=>'file','submit'=>['upload','Upload']],'multipart/form-data').
-				makeLink("?path=".get_back(get_path()),"[Back]").
-				(PHP_OS_FAMILY == "Windows" ? win_disk() : "").
-				(is_dir(get_path()) ? get_dir() : '<pre>'.view_file(get_path()).'</pre>')
-				."</body>";
 	}
-
-//
-//
-//run FileManager.php
-//
-//
-Web();
+	if(get_get("delete")){
+		delete_file(get_get("delete")) ? die("Deleted: ".get_get("delete")) : die("File not found");
+	}
+	if(get_get("edit")){
+		if(get_post('save')){
+			save_edit(get_get('edit'),get_post('edit'));
+			echo "Saved";
+		}
+		$edit = edit_file(get_get("edit"));
+		$edit ? die($edit) : die("File not found");
+	}
+	if(get_get('download')){
+		@readfile(download_file(get_get('download')));
+		exit();
+	}
+	if(get_post('newfile')){
+		new_file(get_path(),get_post('filename')) ? die('Create: '.get_post('filename')) : die('File exites');
+	}
+	if(get_post('newdir')){
+		new_dir(get_path(),get_post('dirname')) ? die('Create: '.get_post('dirname')) : die('Dir exites');
+	}
+	if(get_post('upload')){
+		upload_file(get_path(),$_FILES['file']) ? die('upload: '. $_FILES['file']['name']) : die('Upload Error');
+	}
+	echo $head.
+		"<body>".
+		makeForm('POST',['text'=>['filename','File Name'],'submit'=>['newfile','Create']]).
+		makeForm('POST',['text'=>['dirname','Dir Name'],'submit'=>['newdir','Create']]).
+		makeForm('POST',['file'=>'file','submit'=>['upload','Upload']],'multipart/form-data').
+		makeLink("?path=".get_back(get_path()),"[Back]").
+		(PHP_OS_FAMILY == "Windows" ? win_disk() : "").
+		(is_dir(get_path()) ? get_dir() : '<pre>'.view_file(get_path()).'</pre>')
+		."</body>";
 
 
 
