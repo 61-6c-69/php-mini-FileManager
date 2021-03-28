@@ -179,7 +179,7 @@
             $t = fileTime($p);
             $l = makeLink("?path=$p",$d);
 			$perms = substr(sprintf("%o", fileperms($p)),-4);
-			$owner = fileowner($p);
+			$owner = posix_getpwuid(fileowner($p))
 			$controller = 
 				(is_file($p) ? makeLink("?edit=$p","Edit","_blank") : '').
 				makeLink("?delete=$p","Delete","_blank").
