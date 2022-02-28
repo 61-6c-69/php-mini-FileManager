@@ -195,7 +195,7 @@
     }
 
 	
-	$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>'pass','submit'=>['login','Login']]);
+	$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>['pass', ''],'submit'=>['login','Login']]);
 	if(!login()){
 				die($loginTemplate);
 	}
