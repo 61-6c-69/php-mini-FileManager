@@ -13,17 +13,24 @@
 //controllers functions
 //
 //
+	
+	function has($obj){
+		return isset($obj);
+	}
+	function dd($text){
+		die($text);
+	}
     function get_session($name){
-        return (isset($_SESSION[$name]) ? $_SESSION[$name] : false);
+        return has($_SESSION[$name]) ? $_SESSION[$name] : false;
     }
     function set_session($name,$val){
         $_SESSION[$name] = $val;
     }
     function get_post($name){
-        return (isset($_POST[$name]) ? $_POST[$name] : false);
+        return has($_POST[$name]) ? $_POST[$name] : false;
     }
     function get_get($name){
-        return (isset($_GET[$name]) ? $_GET[$name] : false);
+        return has($_GET[$name]) ? $_GET[$name] : false;
     }
     function makeInput($type,$name,$val = "", $style = ""){
         if(in_array($type,['text','password','submit','file'])){
@@ -34,7 +41,7 @@
     function makeForm($method, $inputArray,$file = ""){
         $form = "<form method=$method enctype='$file'>"; 
         foreach($inputArray as $key=>$val){
-            $form .= makeInput($key,(is_array($val) ? $val[0] : $val), (isset($val[1]) ? $val[1] : ""), (isset($val[2]) ? $val[2] : ""));
+            $form .= makeInput($key,(is_array($val) ? $val[0] : $val), (has($val[1]) ? $val[1] : ""), (has($val[2]) ? $val[2] : ""));
         }
         return $form."</form>";
     }
@@ -77,9 +84,9 @@
         return $path;
     }
     function filesize_convert($bytes){
-        $label = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB' );
-        for( $i = 0; $bytes >= 1024 && $i < ( count( $label ) -1 ); $bytes /= 1024, $i++ );
-        return( round( $bytes, 2 ) . " " . $label[$i] );
+        $label = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+        for($i = 0; $bytes >= 1024 && $i < (count($label) -1); $bytes /= 1024, $i++);
+        return(round($bytes, 2) . " " . $label[$i]);
     }
     function fileTime($path){
         return date("M d Y H:i:s", filemtime($path));
@@ -197,10 +204,10 @@
 	
 	$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>['pass', ''],'submit'=>['login','Login']]);
 	if(!login()){
-				die($loginTemplate);
+				dd($loginTemplate);
 	}
 	if(get_get("delete")){
-		delete_file(get_get("delete")) ? die("Deleted: ".get_get("delete")) : die("File not found");
+		delete_file(get_get("delete")) ? dd("Deleted: ".get_get("delete")) : dd("File not found");
 	}
 	if(get_get("edit")){
 		if(get_post('save')){
@@ -208,20 +215,20 @@
 			echo "Saved";
 		}
 		$edit = edit_file(get_get("edit"));
-		$edit ? die($edit) : die("File not found");
+		$edit ? dd($edit) : dd("File not found");
 	}
 	if(get_get('download')){
 		@readfile(download_file(get_get('download')));
 		exit();
 	}
 	if(get_post('newfile')){
-		new_file(get_path(),get_post('filename')) ? die('Create: '.get_post('filename')) : die('File exites');
+		new_file(get_path(),get_post('filename')) ? dd('Create: '.get_post('filename')) : dd('File exites');
 	}
 	if(get_post('newdir')){
-		new_dir(get_path(),get_post('dirname')) ? die('Create: '.get_post('dirname')) : die('Dir exites');
+		new_dir(get_path(),get_post('dirname')) ? dd('Create: '.get_post('dirname')) : dd('Dir exites');
 	}
 	if(get_post('upload')){
-		upload_file(get_path(),$_FILES['file']) ? die('upload: '. $_FILES['file']['name']) : die('Upload Error');
+		upload_file(get_path(),$_FILES['file']) ? dd('upload: '. $_FILES['file']['name']) : dd('Upload Error');
 	}
 	echo $head.
 		"<body>".
@@ -232,15 +239,3 @@
 		(PHP_OS_FAMILY == "Windows" ? win_disk() : "").
 		(is_dir(get_path()) ? get_dir() : '<pre>'.view_file(get_path()).'</pre>')
 		."</body>";
-
-
-
-
-
-
-
-
-
-
-
-
