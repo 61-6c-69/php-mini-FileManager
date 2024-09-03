@@ -14,12 +14,12 @@
 //
 //
 	
-	function has($obj){
-		return isset($obj);
-	}
-	function dd($text){
-		die($text);
-	}
+    function has($obj){
+        return isset($obj);
+    }
+    function dd($text){
+        die($text);
+    }
     function get_session($name){
         return has($_SESSION[$name]) ? $_SESSION[$name] : false;
     }
