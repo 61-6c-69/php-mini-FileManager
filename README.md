@@ -1,5 +1,5 @@
 # php-mini-FileManager
-php mini FileManager 8kb / min - 4.42kb
+php mini FileManager 6.7 KB / min - 4.03 KB
 
 * Login
 * Edit
