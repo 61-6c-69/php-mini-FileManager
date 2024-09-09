@@ -7,7 +7,6 @@
 	error_reporting(0);
 	session_start();
 	define('password', 'admin');
-	$head = '<head><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Mini-FileManager</title><style>pre{border:1px solid #ddd;padding:5px;overflow:auto}table{border-collapse:collapse;width:100%;overflow:auto}th,td{padding:0.25rem;text-align:left;border-bottom:1px solid #ccc}tbody tr:nth-child(odd){background:#eee}tr:hover{background-color:#f5f5f5}</style></head>';
 //
 //
 //controllers functions
@@ -202,7 +201,7 @@
     }
 
 	
-	$loginTemplate = makeForm('POST',['p'=>['','Password(default admin): '],'password'=>['pass', ''],'submit'=>['login','Login']]);
+	$loginTemplate = makeForm('POST',['p'=>['','Password: '],'password'=>['pass', ''],'submit'=>['login','Login']]);
 	if(!login()){
 				dd($loginTemplate);
 	}
@@ -230,8 +229,7 @@
 	if(get_post('upload')){
 		upload_file(get_path(),$_FILES['file']) ? dd('upload: '. $_FILES['file']['name']) : dd('Upload Error');
 	}
-	echo $head.
-		"<body>".
+	echo "<body>".
 		makeForm('POST',['text'=>['filename','File Name'],'submit'=>['newfile','Create']]).
 		makeForm('POST',['text'=>['dirname','Dir Name'],'submit'=>['newdir','Create']]).
 		makeForm('POST',['file'=>'file','submit'=>['upload','Upload']],'multipart/form-data').
